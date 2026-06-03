@@ -2,52 +2,49 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Quiz() {
-  const [questions, setQuestions] = useState([])
-  const [current, setCurrent] = useState(0)
-  const [answers, setAnswers] = useState([])
-  const [timer, setTimer] = useState(15)
-  const [selected, setSelected] = useState(null)
-  const navigate = useNavigate()
-  // Load questions from localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem('quiz_questions')
+  const [questions, setQuestions]=useState([])
+  const [current, setCurrent]=useState(0)
+  const [answers, setAnswers]=useState([])
+  const [timer, setTimer]=useState(15)
+  const [selected, setSelected]=useState(null)
+  const navigate=useNavigate()
+  useEffect(()=>{
+    const stored=localStorage.getItem('quiz_questions')
     if (!stored) {
       navigate('/setup')
       return
     }
     setQuestions(JSON.parse(stored))
   }, [])
-  // Timer logic
-  useEffect(() => {
+  useEffect(()=>{
     if (!questions.length) return
-    if (timer === 0) {
-      handleAnswer(null) // auto move if time runs out
+    if (timer===0) {
+      handleAnswer(null)
       return
     }
-    const countdown = setTimeout(() => {
-      setTimer(t => t - 1)
+    const countdown=setTimeout(()=>{
+      setTimer(t=>t-1)
     }, 1000)
-    return () => clearTimeout(countdown)
+    return ()=>clearTimeout(countdown)
   }, [timer, questions, current])
-  const handleAnswer = (selectedOption) => {
+  const handleAnswer=(selectedOption)=>{
     const q = questions[current]
-    const isCorrect = selectedOption === q.correct_answer
+    const isCorrect = selectedOption===q.correct_answer
     setSelected(selectedOption)
-    const newAnswer = {
+    const newAnswer={
       question: q.question,
       correct_answer: q.correct_answer,
       user_answer: selectedOption,
       isCorrect
     }
-    const updatedAnswers = [...answers, newAnswer]
-    // Wait 1 second so user can see correct answer then move
-    setTimeout(() => {
-      if (current + 1 < questions.length) {
-        setCurrent(c => c + 1)
+    const updatedAnswers=[...answers, newAnswer]
+    setTimeout(()=>{
+      if (current+1<questions.length) {
+        setCurrent(c=>c+1)
         setTimer(15)
         setSelected(null)
       } else {
-        // Quiz finished — save answers and go to results
+        
         localStorage.setItem('quiz_answers', JSON.stringify(updatedAnswers))
         navigate('/results')
       }
@@ -67,7 +64,7 @@ export default function Quiz() {
       margin: '40px auto',
       padding: '30px',
     }}>
-      {/* Header — Progress + Timer */}
+      {/*Header—Progress+Timer*/}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -92,7 +89,7 @@ export default function Quiz() {
           {timer}
         </span>
       </div>
-      {/* Progress Bar */}
+      {/*Progress Bar*/}
       <div style={{
         backgroundColor: '#e5e7eb',
         borderRadius: '999px',
@@ -107,7 +104,7 @@ export default function Quiz() {
           transition: 'width 0.3s'
         }} />
       </div>
-      {/* Question */}
+      {/*Question*/}
       <div style={{
         backgroundColor: '#f9fafb',
         padding: '24px',
@@ -119,7 +116,7 @@ export default function Quiz() {
           dangerouslySetInnerHTML={{ __html: q.question }}
         />
       </div>
-      {/* Answer Options */}
+      {/*Answer Options*/}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {q.options.map((option, index) => {
           // Button color logic
@@ -158,10 +155,10 @@ export default function Quiz() {
           )
         })}
       </div>
-      {/* Score tracker */}
+      {/*Score tracker*/}
       <p style={{ textAlign: 'center', marginTop: '24px', color: '#6b7280' }}>
-        ✅ Correct: {answers.filter(a => a.isCorrect).length} |
-        ❌ Wrong: {answers.filter(a => !a.isCorrect).length}
+        Correct: {answers.filter(a => a.isCorrect).length} |
+        Wrong: {answers.filter(a => !a.isCorrect).length}
       </p>
     </div>
   )

@@ -11,14 +11,13 @@ function App() {
     <BrowserRouter>
     <Navbar/>
       <Routes>
-        <Route path="/"          element={<Home />} />
-        <Route path="/setup"     element={<QuizSetup />} />
-        <Route path="/quiz"      element={<Quiz />} />
-        <Route path="/results"   element={<Results />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/"element={<Home />} />
+        <Route path="/setup"element={<QuizSetup />} />
+        <Route path="/quiz"element={<Quiz />} />
+        <Route path="/results"element={<Results />} />
+        <Route path="/dashboard"element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   )
 }
-
 export default App

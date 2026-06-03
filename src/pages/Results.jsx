@@ -1,32 +1,26 @@
-import { useNavigate } from 'react-router-dom'
-import { saveSession } from '../utils/storage'
+import {useNavigate}from'react-router-dom'
+import {saveSession}from'../utils/storage'
 
 export default function Results() {
   const navigate = useNavigate()
   const answers = JSON.parse(localStorage.getItem('quiz_answers') || '[]')
   const config = JSON.parse(localStorage.getItem('quiz_config') || '{}')
-
   const score = answers.filter(a => a.isCorrect).length
   const total = answers.length
   const wrong = total - score
   const percentage = Math.round((score / total) * 100)
-
-  // Emoji based on score
   const getEmoji = () => {
     if (percentage >= 80) return '🏆'
     if (percentage >= 60) return '😊'
     if (percentage >= 40) return '😐'
     return '😢'
   }
-
-  // Message based on score
   const getMessage = () => {
     if (percentage >= 80) return 'Excellent Work!'
     if (percentage >= 60) return 'Good Job!'
     if (percentage >= 40) return 'Keep Practicing!'
     return 'Better Luck Next Time!'
   }
-
   const handleSave = () => {
     saveSession({
       id: Date.now(),
@@ -37,16 +31,14 @@ export default function Results() {
       total,
       questions: answers
     })
-    alert('✅ Quiz saved to history!')
+    alert('Quiz saved to history!')
   }
-
   return (
     <div style={{
       maxWidth: '650px',
       margin: '40px auto',
       padding: '30px',
     }}>
-
       {/* Score Card */}
       <div style={{
         textAlign: 'center',
@@ -74,23 +66,22 @@ export default function Results() {
             <p style={{ color: '#22c55e', fontSize: '28px', fontWeight: 'bold', margin: 0 }}>
               {score}
             </p>
-            <p style={{ color: '#6b7280', margin: 0 }}>✅ Correct</p>
+            <p style={{ color: '#6b7280', margin: 0 }}>Correct</p>
           </div>
           <div style={statCardStyle}>
             <p style={{ color: '#ef4444', fontSize: '28px', fontWeight: 'bold', margin: 0 }}>
               {wrong}
             </p>
-            <p style={{ color: '#6b7280', margin: 0 }}>❌ Wrong</p>
+            <p style={{ color: '#6b7280', margin: 0 }}>Wrong</p>
           </div>
           <div style={statCardStyle}>
             <p style={{ color: '#4f46e5', fontSize: '28px', fontWeight: 'bold', margin: 0 }}>
               {percentage}%
             </p>
-            <p style={{ color: '#6b7280', margin: 0 }}>📊 Score</p>
+            <p style={{ color: '#6b7280', margin: 0 }}>Score</p>
           </div>
         </div>
       </div>
-
       {/* Quiz Info */}
       <div style={{
         backgroundColor: '#ede9fe',
@@ -100,12 +91,12 @@ export default function Results() {
         display: 'flex',
         justifyContent: 'space-between'
       }}>
-        <span>📚 <strong>Category:</strong> {config.categoryName}</span>
-        <span>🎯 <strong>Difficulty:</strong> {config.difficulty}</span>
+        <span> <strong>Category:</strong> {config.categoryName}</span>
+        <span> <strong>Difficulty:</strong> {config.difficulty}</span>
       </div>
 
       {/* Incorrect Questions Review */}
-      <h2 style={{ color: '#1f2937' }}>📝 Review Incorrect Answers</h2>
+      <h2 style={{ color: '#1f2937' }}>Review Incorrect Answers</h2>
 
       {answers.filter(a => !a.isCorrect).length === 0 ? (
         <p style={{
@@ -116,7 +107,7 @@ export default function Results() {
           backgroundColor: '#dcfce7',
           borderRadius: '10px'
         }}>
-          🎉 Perfect Score! All answers were correct!
+          Perfect Score! All answers were correct!
         </p>
       ) : (
         answers.filter(a => !a.isCorrect).map((a, i) => (
@@ -148,16 +139,16 @@ export default function Results() {
         flexWrap: 'wrap'
       }}>
         <button onClick={handleSave} style={btnSaveStyle}>
-          💾 Save to History
+          Save to History
         </button>
         <button onClick={() => navigate('/setup')} style={btnPrimaryStyle}>
-          🔄 Try Again
+          Try Again
         </button>
         <button onClick={() => navigate('/dashboard')} style={btnSecondaryStyle}>
-          📊 View Dashboard
+          View Dashboard
         </button>
         <button onClick={() => navigate('/')} style={btnHomeStyle}>
-          🏠 Home
+          Home
         </button>
       </div>
 

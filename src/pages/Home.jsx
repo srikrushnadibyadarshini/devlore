@@ -2,17 +2,15 @@ import { getSessions } from '../utils/storage'
 import { Link } from 'react-router-dom'
 
 export default function Home() {
-  const sessions = getSessions()
-  const total = sessions.length
+  const sessions=getSessions()
+  const total=sessions.length
 
-  // Calculate average score
   const avgScore = total
     ? Math.round(
         sessions.reduce((sum, s) => sum + (s.score / s.total) * 100, 0) / total
       )
     : 0
 
-  // Find best performing category
   const categoryMap = {}
   sessions.forEach(s => {
     if (!categoryMap[s.category]) {
@@ -29,14 +27,12 @@ export default function Home() {
     }))
     .sort((a, b) => b.avg - a.avg)[0]?.cat || 'N/A'
 
-  // Get recent 3 sessions
   const recentSessions = [...sessions].reverse().slice(0, 3)
 
-  // If no history exists
   if (total === 0) {
     return (
       <div style={{ textAlign: 'center', marginTop: '100px' }}>
-        <h1>Welcome to DevLore 🧠</h1>
+        <h1>Welcome to DevLore</h1>
         <p>Test your technical knowledge and track your progress!</p>
         <Link to="/setup">
           <button style={{
@@ -55,10 +51,9 @@ export default function Home() {
     )
   }
 
-  // If history exists
   return (
     <div style={{ maxWidth: '700px', margin: '40px auto', padding: '0 20px' }}>
-      <h1>Welcome Back! 🧠</h1>
+      <h1>Welcome Back</h1>
 
       {/* Stats Section */}
       <div style={{
@@ -112,7 +107,7 @@ export default function Home() {
   )
 }
 
-// Styles
+
 const cardStyle = {
   backgroundColor: '#f3f4f6',
   padding: '20px',

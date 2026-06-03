@@ -2,10 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 export default function Navbar() {
   const location = useLocation()
-
-  // Helper to check active page
   const isActive = (path) => location.pathname === path
-
   return (
     <nav style={{
       backgroundColor: '#4f46e5',
@@ -25,38 +22,32 @@ export default function Navbar() {
         fontWeight: 'bold',
         letterSpacing: '1px'
       }}>
-        🧠 DevLore
+        DevLore
       </Link>
-
       {/* Nav Links */}
       <div style={{ display: 'flex', gap: '8px' }}>
-
         <Link to="/" style={linkStyle(isActive('/'))}>
-          🏠 Home
+          Home
         </Link>
-
         <Link to="/setup" style={linkStyle(isActive('/setup'))}>
-          ⚙️ Quiz
+          Quiz
         </Link>
-
         <Link to="/dashboard" style={linkStyle(isActive('/dashboard'))}>
-          📊 Dashboard
+          Dashboard
         </Link>
-
       </div>
-
     </nav>
   )
 }
 
-// Active vs inactive link style
+
 const linkStyle = (active) => ({
-  color: 'white',
-  textDecoration: 'none',
-  padding: '6px 14px',
-  borderRadius: '8px',
-  fontSize: '15px',
-  backgroundColor: active ? 'rgba(255,255,255,0.25)' : 'transparent',
-  fontWeight: active ? 'bold' : 'normal',
-  transition: 'background 0.2s'
+  color:'white',
+  textDecoration:'none',
+  padding:'6px 14px',
+  borderRadius:'8px',
+  fontSize:'15px',
+  backgroundColor: active ?'rgba(255,255,255,0.25)':'transparent',
+  fontWeight: active ?'bold':'normal',
+  transition:'background 0.2s'
 })
